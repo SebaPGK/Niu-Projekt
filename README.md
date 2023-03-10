@@ -1,3 +1,3 @@
 # Niu-Projekt
 
-Test 2
+Gra zaprojektowana w silniku Unity z wykorzystaniem Kinect'a jako kontroler.
