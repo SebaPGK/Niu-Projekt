@@ -6,8 +6,9 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
 {
     public GUIText GestureInfo;
 
-    private bool Psi;
-    private bool Tpose;
+    public bool Psi;
+    public bool Tpose;
+
 
     public bool IsPsi()
     {
