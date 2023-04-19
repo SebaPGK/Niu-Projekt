@@ -53,7 +53,8 @@ public class KinectGestures
 		Jump,
 		Squat,
 		Push,
-		Pull
+		Pull,
+		StartDraw
 	}
 	
 	
@@ -92,9 +93,10 @@ public class KinectGestures
 	private const int shoulderCenterIndex = (int)KinectWrapper.NuiSkeletonPositionIndex.ShoulderCenter;
 	private const int leftHipIndex = (int)KinectWrapper.NuiSkeletonPositionIndex.HipLeft;
 	private const int rightHipIndex = (int)KinectWrapper.NuiSkeletonPositionIndex.HipRight;
-	
-	
-	private static void SetGestureJoint(ref GestureData gestureData, float timestamp, int joint, Vector3 jointPos)
+    private const int headIndex = (int)KinectWrapper.NuiSkeletonPositionIndex.Head;
+
+
+    private static void SetGestureJoint(ref GestureData gestureData, float timestamp, int joint, Vector3 jointPos)
 	{
 		gestureData.joint = joint;
 		gestureData.jointPos = jointPos;
@@ -1103,8 +1105,30 @@ public class KinectGestures
 				}
 				break;
 
-			// here come more gesture-cases
-		}
+            // here come more gesture-cases
+            case Gestures.StartDraw:
+                switch (gestureData.state)
+                {
+                    case 0:  // gesture detection
+                        if (jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
+                           (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f &&
+                           (jointsPos[rightHandIndex].x - jointsPos[headIndex].x) > 0.1f)
+                        {
+                            SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
+                        }
+                        break;
+
+                    case 1:  // gesture complete
+                        bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
+                           (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f &&
+                           (jointsPos[rightHandIndex].x - jointsPos[headIndex].x) > 0.1f;
+
+                        Vector3 jointPos = jointsPos[gestureData.joint];
+                        CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectWrapper.Constants.PoseCompleteDuration);
+                        break;
+                }
+                break;
+        }
 	}
 
 }

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
 
 public class PresentationGestures : MonoBehaviour
 {
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
+    public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint2 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
+    public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint3 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     public GameObject OverlayObject;
     private ReadingGesture readingGesture;
     public float smoothFactor = 5f; 
@@ -26,7 +29,7 @@ public class PresentationGestures : MonoBehaviour
     void Update()
     {
         KinectManager manager = KinectManager.Instance;
-        //Debug.Log(readingGesture.Psi);
+        //Debug.Log(readingGesture.StartDraw);
         if (manager && manager.IsInitialized())
         {
             int iJointIndex = (int)TrackedJoint;
@@ -37,7 +40,10 @@ public class PresentationGestures : MonoBehaviour
                 if (manager.IsJointTracked(userId, iJointIndex))
                 {
                     Vector3 posJoint = manager.GetRawSkeletonJointPos(userId, iJointIndex);
-
+                    if (readingGesture.StartDraw == true)
+                    {
+                        Draw();
+                    }
                     if (posJoint != Vector3.zero)
                     {
                         // 3d position to depth
@@ -46,7 +52,6 @@ public class PresentationGestures : MonoBehaviour
 
                         // depth pos to color pos
                         Vector2 posColor = manager.GetColorMapPosForDepthPos(posDepth);
-                        Debug.Log(posColor);
 
                         float scaleX = (float)posColor.x / KinectWrapper.Constants.ColorImageWidth;
                         float scaleY = 1.0f - (float)posColor.y / KinectWrapper.Constants.ColorImageHeight;
@@ -62,5 +67,10 @@ public class PresentationGestures : MonoBehaviour
                 }
             }
         }
+    }
+
+    void Draw()
+    {
+
     }
 }

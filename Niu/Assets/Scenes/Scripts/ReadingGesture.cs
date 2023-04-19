@@ -8,6 +8,7 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
 
     public bool Psi;
     public bool Tpose;
+    public bool StartDraw;
 
 
     public bool IsPsi()
@@ -31,6 +32,18 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
 
         return false;
     }
+    public bool IsStartDraw() {
+        if (StartDraw)
+        {
+            StartDraw = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    
+    
 
     public void UserDetected(uint userId, int userIndex)
     {
@@ -38,6 +51,7 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
         KinectManager manager = KinectManager.Instance;
         manager.DetectGesture(userId, KinectGestures.Gestures.Psi);
         manager.DetectGesture(userId, KinectGestures.Gestures.Tpose);
+        manager.DetectGesture(userId, KinectGestures.Gestures.StartDraw);
 
         if (GestureInfo != null)
         {
@@ -72,6 +86,8 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
             Psi = true;
         else if (gesture == KinectGestures.Gestures.Tpose)
             Tpose = true;
+        else if (gesture == KinectGestures.Gestures.StartDraw)
+            StartDraw = true;
 
         return true;
     }
