@@ -359,7 +359,7 @@ GUIText:
   m_GameObject: {fileID: 415858118}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: ddddddd
+  m_Text: GestureInfo
   m_Anchor: 0
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}
@@ -553,10 +553,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TrackedJoint: 11
-  TrackedJoint2: 11
-  TrackedJoint3: 11
   OverlayObject: {fileID: 1412413750}
-  canvas: {fileID: 401710867}
+  canvas: {fileID: 401710864}
   smoothFactor: 5
   isExecuted: 0
   coordinates: 000000000000000000000000000000000000000000000000000000000000000000000000
@@ -584,7 +582,7 @@ GUIText:
   m_GameObject: {fileID: 871025410}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: ssssss
+  m_Text: CalibrationText
   m_Anchor: 0
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}
