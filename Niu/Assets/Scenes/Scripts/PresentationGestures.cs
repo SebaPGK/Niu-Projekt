@@ -9,6 +9,7 @@ public class PresentationGestures : MonoBehaviour
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint2 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint3 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     public GameObject OverlayObject;
+    public Canvas canvas;
     private ReadingGesture readingGesture;
     public float smoothFactor = 5f;
     private float distanceToCamera = 10f;
@@ -19,11 +20,15 @@ public class PresentationGestures : MonoBehaviour
     void Start()
     {
         //Cursor.visible = false;
-
+        
         readingGesture = Camera.main.GetComponent<ReadingGesture>();
         if (OverlayObject)
         {
             distanceToCamera = (OverlayObject.transform.position - Camera.main.transform.position).magnitude;
+        }
+        if (canvas)
+        {
+            canvas.visiblity
         }
     }
 
