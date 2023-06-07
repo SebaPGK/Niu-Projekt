@@ -11,6 +11,7 @@ public class PresentationGestures : MonoBehaviour
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint3 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;*/
     public GameObject OverlayObject;
     public GameObject canvas;
+    public GameObject[] Sprites;
     private ReadingGesture readingGesture;
     public float smoothFactor = 5f;
     private float distanceToCamera = 10f;
@@ -34,7 +35,11 @@ public class PresentationGestures : MonoBehaviour
         }
         
             canvas.SetActive(false);
-        
+        foreach (GameObject sprites in Sprites)
+        {
+            sprites.SetActive(false); ;
+        }
+
     }
     // Update is called once per frame
     void Update()
@@ -63,7 +68,7 @@ public class PresentationGestures : MonoBehaviour
 
                         float scaleX = (float)posColor.x / KinectWrapper.Constants.ColorImageWidth;
                         float scaleY = 1.0f - (float)posColor.y / KinectWrapper.Constants.ColorImageHeight;
-                        Debug.Log(readingGesture.StartDraw);
+                        //Debug.Log(readingGesture.StartDraw);
                         if (isExecuted == false && readingGesture.IsStartDraw())
                         {
                             Draw(posColor);
@@ -90,6 +95,7 @@ public class PresentationGestures : MonoBehaviour
                         //Debug.Log(coordinates[i - 1] + " " + j);
                         coordinates[i] = j + 1;
                         i++;
+                        Sprites[j].SetActive(true);
                     }
 
                 }
@@ -97,28 +103,33 @@ public class PresentationGestures : MonoBehaviour
             if (i>8)
             {
                 canvas.SetActive(false);
-                isExecuted = false;
+                isExecuted = false; 
+                Debug.Log("Brak poprawnego gestu");
+                
             }
-            //Debug.Log(string.Join("", new List<int>(coordinates).ConvertAll(i => i.ToString()).ToArray()));
+            Debug.Log(string.Join("", new List<int>(coordinates).ConvertAll(i => i.ToString()).ToArray()));
             switch (string.Join("", new List<int>(coordinates).ConvertAll(i => i.ToString()).ToArray()))
             {
                 case "0365800000":
                     Debug.Log("Ado");
+                    Construvt("Ado");
                     canvas.SetActive(false);
                     isExecuted = false;
                     break;
                 case "0351200000":
                     Debug.Log("U\'de");
+                    Construvt("U\'de");
                     canvas.SetActive(false);
                     isExecuted = false;
                     break;
                 case "0321478900":
                     Debug.Log("Eido\'");
+                    Construvt("Eido\'");
                     canvas.SetActive(false);
                     isExecuted = false;
                     break;
-                default: 
-
+                default:
+                    
                     break;
             }
         }
@@ -128,14 +139,36 @@ public class PresentationGestures : MonoBehaviour
     {
         if (isExecuted == false)
         {
-            
+            foreach (GameObject sprites in Sprites)
+            {
+                sprites.SetActive(false); ;
+            }
+
             canvas.SetActive(true);
             i = 1;
-            foreach (int k in coordinates)
+            
+            for (int k = 0; k < coordinates.Length; k++)
             {
                 coordinates[k] = 0;
             }
             isExecuted = true;
         }
     }
+
+    void Construvt(string element) { 
+        switch (element)
+        {
+            case "Ado":
+
+                break;
+            case "U\'de":
+
+                break;
+            case "Eido\'":
+
+                break;
+        }
+    
+    }
+
 }

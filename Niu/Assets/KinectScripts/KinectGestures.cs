@@ -1112,7 +1112,8 @@ public class KinectGestures
                     case 0:  // gesture detection
                         if (jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
                            (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f &&
-                           (jointsPos[rightHandIndex].x - jointsPos[headIndex].x) > 0.1f)
+                           (jointsPos[rightHandIndex].x - jointsPos[headIndex].x) > 0.1f &&
+                           jointsPos[headIndex].z > jointsPos[rightHandIndex].z)
                         {
                             SetGestureJoint(ref gestureData, timestamp, rightHandIndex, jointsPos[rightHandIndex]);
                         }
@@ -1121,7 +1122,8 @@ public class KinectGestures
                     case 1:  // gesture complete
                         bool isInPose = jointsTracked[rightHandIndex] && jointsTracked[rightShoulderIndex] &&
                            (jointsPos[rightHandIndex].y - jointsPos[rightShoulderIndex].y) > 0.1f &&
-                           (jointsPos[rightHandIndex].x - jointsPos[headIndex].x) > 0.1f;
+                           (jointsPos[rightHandIndex].x - jointsPos[headIndex].x) > 0.1f &&
+                           jointsPos[headIndex].z > jointsPos[rightHandIndex].z;
 
                         Vector3 jointPos = jointsPos[gestureData.joint];
                         CheckPoseComplete(ref gestureData, timestamp, jointPos, isInPose, KinectWrapper.Constants.PoseCompleteDuration);
