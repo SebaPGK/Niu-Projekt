@@ -9,6 +9,7 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
     public bool Psi;
     public bool Tpose;
     public bool StartDraw;
+    public bool isDrawing;
 
 
     public bool IsPsi()
@@ -41,7 +42,6 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
 
         return false;
     }
-
     
     
 
@@ -82,12 +82,16 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
             GestureInfo.GetComponent<GUIText>().text = sGestureText;
         }
 
+
         if (gesture == KinectGestures.Gestures.Psi)
             Psi = true;
         else if (gesture == KinectGestures.Gestures.Tpose)
             Tpose = true;
         else if (gesture == KinectGestures.Gestures.StartDraw)
-            StartDraw = true;
+            if (isDrawing == false)
+            {
+                StartDraw = true;
+            }
 
         return true;
     }

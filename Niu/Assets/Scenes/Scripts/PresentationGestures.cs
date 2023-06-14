@@ -6,23 +6,32 @@ using System.Threading;
 
 public class PresentationGestures : MonoBehaviour
 {
+    public GUIText GameInfo;
+    public GUIText GameInfo1;
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     /*public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint2 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint3 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;*/
+    private float scaleX;
+    private float scaleY;
     public GameObject OverlayObject;
     public GameObject canvas;
     public GameObject[] Sprites;
+    public GameObject Head;
+    public GameObject Body;
     private ReadingGesture readingGesture;
     public float smoothFactor = 5f;
     private float distanceToCamera = 10f;
     public bool isExecuted = false;
     private int[] coordinates = new int[10];
-    private int[,] fields = { { 205, 240, 104, 130}, { 300, 335, 104, 130}, { 395, 430, 104, 130},
-                            { 205, 240, 225, 260}, { 300, 335, 225, 260}, { 395, 430, 225, 260},
-                            { 205, 240, 345, 390}, { 300, 335, 345, 390}, { 395, 430, 345, 390}};
+    private float[,] fields = { { 0.36f,0.4f,0.64f,0.68f}, { 0.48f,0.52f,0.64f,0.68f}, { 0.6f,0.64f,0.64f,0.68f},
+                            { 0.36f,0.4f,0.48f,0.52f}, { 0.48f,0.52f,0.48f,0.52f}, { 0.6f,0.64f,0.48f,0.52f},
+                            { 0.36f,0.4f,0.32f,0.36f}, { 0.48f,0.52f,0.32f,0.36f}, { 0.6f,0.64f,0.32f,0.36f}};
     private Vector2 posColor;
     private int i = 0;
+    private int[] randomGolem= new int[2];
 
+    private int[] built = new int[2];
+    private int points = 0;
     // Use this for initialization
     void Start()
     {
@@ -40,11 +49,14 @@ public class PresentationGestures : MonoBehaviour
             sprites.SetActive(false); ;
         }
 
+        
+        
+        
     }
     // Update is called once per frame
     void Update()
     {
-
+        GameInfo1.GetComponent<GUIText>().text ="Punkty: " + points.ToString();
         KinectManager manager = KinectManager.Instance;
         
         if (manager && manager.IsInitialized())
@@ -66,14 +78,45 @@ public class PresentationGestures : MonoBehaviour
                         // depth pos to color pos
                         posColor = manager.GetColorMapPosForDepthPos(posDepth);
 
-                        float scaleX = (float)posColor.x / KinectWrapper.Constants.ColorImageWidth;
-                        float scaleY = 1.0f - (float)posColor.y / KinectWrapper.Constants.ColorImageHeight;
-                        //Debug.Log(readingGesture.StartDraw);
+                        scaleX = (float)posColor.x / KinectWrapper.Constants.ColorImageWidth;
+                        scaleY = 1.0f - (float)posColor.y / KinectWrapper.Constants.ColorImageHeight;
+                        Debug.Log(readingGesture.StartDraw);
                         if (isExecuted == false && readingGesture.IsStartDraw())
                         {
-                            Draw(posColor);
+                            Draw(scaleX, scaleY);
+                            readingGesture.isDrawing = true;
                         }
 
+                        if (isExecuted == true && readingGesture.IsTpose())
+                        {
+                            canvas.SetActive(false);
+                            isExecuted = false;
+                            readingGesture.isDrawing = false;
+                            Debug.Log("Anulowano");
+                        }
+
+                        if (isExecuted == false && readingGesture.IsPsi() )
+                        {
+                            if (randomGolem[0] == built[0] && randomGolem[1] == built[1])
+                            {
+                                points += 5;
+                            }
+                            else if (built[0] == 0 && built[1] == 0)
+                            {
+                                
+                            }
+                            else
+                            {
+                                points -= 3;
+                            }
+                            randomGolem[0] = 0;
+                            randomGolem[1] = 0;
+                            built[0] = 0;
+                            built[1] = 0;
+
+                            Debug.Log("zatwierdzono");
+                        }
+                        //Debug.Log(scaleX+","+ scaleY);
                         if (OverlayObject)
                         {
                             Vector3 vPosOverlay = Camera.main.ViewportToWorldPoint(new Vector3(scaleX, scaleY, distanceToCamera));
@@ -87,7 +130,7 @@ public class PresentationGestures : MonoBehaviour
         {
             for (int j = 0; j < fields.GetLength(0); j++)
             {
-                if (posColor.x > fields[j, 0] && posColor.x < fields[j, 1] && posColor.y > fields[j, 2] && posColor.y < fields[j, 3])
+                if (scaleX > fields[j, 0] && scaleX < fields[j, 1] && scaleY > fields[j, 2] && scaleY < fields[j, 3])
                 {
                     
                     if (i==1||(j+1 != coordinates[i - 1]))
@@ -103,11 +146,12 @@ public class PresentationGestures : MonoBehaviour
             if (i>8)
             {
                 canvas.SetActive(false);
-                isExecuted = false; 
+                isExecuted = false;
+                readingGesture.isDrawing = false;
                 Debug.Log("Brak poprawnego gestu");
                 
             }
-            Debug.Log(string.Join("", new List<int>(coordinates).ConvertAll(i => i.ToString()).ToArray()));
+            //Debug.Log(string.Join("", new List<int>(coordinates).ConvertAll(i => i.ToString()).ToArray()));
             switch (string.Join("", new List<int>(coordinates).ConvertAll(i => i.ToString()).ToArray()))
             {
                 case "0365800000":
@@ -133,9 +177,15 @@ public class PresentationGestures : MonoBehaviour
                     break;
             }
         }
+
+        if (randomGolem[0] == 0 && randomGolem[1] == 0)
+        {
+            AssignRandomGolem();
+        }
+        
     }
 
-    void Draw(Vector2 posColor)
+    void Draw(float scaleX, float scaleY)
     {
         if (isExecuted == false)
         {
@@ -159,16 +209,27 @@ public class PresentationGestures : MonoBehaviour
         switch (element)
         {
             case "Ado":
-
+                //Head.transform.GetChild(0).gameObject;
+                if (built[0] != 0) { built[1] = 1; } else { built[0] = 1; }
                 break;
             case "U\'de":
-
+                //Head.transform.GetChild(1).gameObject;
+                if (built[0] != 0) { built[1] = 2; } else { built[0] = 2; }
                 break;
             case "Eido\'":
-
+                //Head.transform.GetChild(2).gameObject;
+                if (built[0] != 0) {built[1] = 3;} else {built[0] = 3;}
                 break;
         }
-    
+        readingGesture.isDrawing = false;
+
     }
+    void AssignRandomGolem()
+    {
+        randomGolem[0] = Random.Range(1, 4);
+        randomGolem[1] = Random.Range(1, 4);
+        GameInfo.GetComponent<GUIText>().text = randomGolem[0]+""+ randomGolem[1];
+    }
+
 
 }
