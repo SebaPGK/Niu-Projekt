@@ -52,10 +52,9 @@ public class ReadingGesture : MonoBehaviour, KinectGestures.GestureListenerInter
         manager.DetectGesture(userId, KinectGestures.Gestures.Psi);
         manager.DetectGesture(userId, KinectGestures.Gestures.Tpose);
         manager.DetectGesture(userId, KinectGestures.Gestures.StartDraw);
-
         if (GestureInfo != null)
         {
-            GestureInfo.GetComponent<GUIText>().text = "do Tpose";
+            GestureInfo.GetComponent<GUIText>().text = "";
         }
     }
 

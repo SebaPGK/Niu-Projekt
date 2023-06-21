@@ -3,11 +3,14 @@ using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System;
 
 public class PresentationGestures : MonoBehaviour
 {
     public GUIText GameInfo;
     public GUIText GameInfo1;
+    public GUIText TimeRemainingText;
+    private string[] Symbol = {"Ado", "U'de", "Eido'" };
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     /*public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint2 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint3 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;*/
@@ -16,8 +19,10 @@ public class PresentationGestures : MonoBehaviour
     public GameObject OverlayObject;
     public GameObject canvas;
     public GameObject[] Sprites;
-    public GameObject Head;
-    public GameObject Body;
+    public GameObject[] Head;
+    public GameObject[] Body;
+    private SkinnedMeshRenderer HeadChosen;
+    private SkinnedMeshRenderer BodyChosen;
     private ReadingGesture readingGesture;
     public float smoothFactor = 5f;
     private float distanceToCamera = 10f;
@@ -32,6 +37,7 @@ public class PresentationGestures : MonoBehaviour
 
     private int[] built = new int[2];
     private int points = 0;
+    private float timeRemaining = 120;
     // Use this for initialization
     void Start()
     {
@@ -49,16 +55,28 @@ public class PresentationGestures : MonoBehaviour
             sprites.SetActive(false); ;
         }
 
-        
-        
-        
+        foreach (GameObject head in Head)
+        {
+            head.transform.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
+
+        foreach (GameObject body in Body)
+        {
+            body.transform.gameObject.GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
+        OverlayObject.GetComponent<MeshRenderer>().enabled = false;
     }
     // Update is called once per frame
     void Update()
     {
         GameInfo1.GetComponent<GUIText>().text ="Punkty: " + points.ToString();
         KinectManager manager = KinectManager.Instance;
-        
+
+        timeRemaining -= Time.deltaTime;
+        var ts = TimeSpan.FromSeconds(timeRemaining);
+        TimeRemainingText.GetComponent<GUIText>().text = "Time: " + string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+
+
         if (manager && manager.IsInitialized())
         {
             int iJointIndex = (int)TrackedJoint;
@@ -87,23 +105,42 @@ public class PresentationGestures : MonoBehaviour
                             readingGesture.isDrawing = true;
                         }
 
-                        if (isExecuted == true && readingGesture.IsTpose())
+                        if (readingGesture.IsTpose())
                         {
                             canvas.SetActive(false);
                             isExecuted = false;
                             readingGesture.isDrawing = false;
                             Debug.Log("Anulowano");
+                            OverlayObject.GetComponent<MeshRenderer>().enabled = false;
+                            if (HeadChosen != null)
+                            {
+                                HeadChosen.enabled = false;
+                                HeadChosen = null;
+                            }
+                            if (BodyChosen != null)
+                            {
+                                BodyChosen.enabled = false;
+                                HeadChosen = null;
+                            }
+                            built[0] = 0; 
+                            built[1] = 0;
+                            for (int k = 0; k < coordinates.Length; k++)
+                            {
+                                coordinates[k] = 0;
+                            }
                         }
 
                         if (isExecuted == false && readingGesture.IsPsi() )
                         {
+                            Debug.Log(randomGolem[0]+" "+ built[0]+"||||"+ randomGolem[1] + " " + built[1]);
                             if (randomGolem[0] == built[0] && randomGolem[1] == built[1])
                             {
                                 points += 5;
+                                
                             }
                             else if (built[0] == 0 && built[1] == 0)
                             {
-                                
+                                //To ma pozostać puste
                             }
                             else
                             {
@@ -113,7 +150,21 @@ public class PresentationGestures : MonoBehaviour
                             randomGolem[1] = 0;
                             built[0] = 0;
                             built[1] = 0;
-
+                            OverlayObject.GetComponent<MeshRenderer>().enabled = false;
+                            if (HeadChosen != null)
+                            {
+                                HeadChosen.enabled = false;
+                                HeadChosen = null;
+                            }
+                            if (BodyChosen != null)
+                            {
+                                BodyChosen.enabled = false;
+                                HeadChosen = null;
+                            }
+                            for (int k = 0; k < coordinates.Length; k++)
+                            {
+                                coordinates[k] = 0;
+                            }
                             Debug.Log("zatwierdzono");
                         }
                         //Debug.Log(scaleX+","+ scaleY);
@@ -126,6 +177,7 @@ public class PresentationGestures : MonoBehaviour
                 }
             }
         }
+
         if (isExecuted == true)
         {
             for (int j = 0; j < fields.GetLength(0); j++)
@@ -148,6 +200,7 @@ public class PresentationGestures : MonoBehaviour
                 canvas.SetActive(false);
                 isExecuted = false;
                 readingGesture.isDrawing = false;
+                OverlayObject.GetComponent<MeshRenderer>().enabled = false;
                 Debug.Log("Brak poprawnego gestu");
                 
             }
@@ -159,18 +212,21 @@ public class PresentationGestures : MonoBehaviour
                     Construvt("Ado");
                     canvas.SetActive(false);
                     isExecuted = false;
+                    OverlayObject.GetComponent<MeshRenderer>().enabled = false;
                     break;
                 case "0351200000":
                     Debug.Log("U\'de");
                     Construvt("U\'de");
                     canvas.SetActive(false);
                     isExecuted = false;
+                    OverlayObject.GetComponent<MeshRenderer>().enabled = false;
                     break;
                 case "0321478900":
                     Debug.Log("Eido\'");
                     Construvt("Eido\'");
                     canvas.SetActive(false);
                     isExecuted = false;
+                    OverlayObject.GetComponent<MeshRenderer>().enabled = false;
                     break;
                 default:
                     
@@ -193,7 +249,7 @@ public class PresentationGestures : MonoBehaviour
             {
                 sprites.SetActive(false); ;
             }
-
+            OverlayObject.GetComponent<MeshRenderer>().enabled = true;
             canvas.SetActive(true);
             i = 1;
             
@@ -209,16 +265,44 @@ public class PresentationGestures : MonoBehaviour
         switch (element)
         {
             case "Ado":
-                //Head.transform.GetChild(0).gameObject;
-                if (built[0] != 0) { built[1] = 1; } else { built[0] = 1; }
+               
+                
+                if (built[0] != 0) { 
+                    built[1] = 1;
+                    HeadChosen = Head[0].transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+                    HeadChosen.enabled = true;
+                } else { 
+                    built[0] = 1;
+                    BodyChosen = Body[0].transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+                    BodyChosen.enabled = true;
+                }
                 break;
             case "U\'de":
-                //Head.transform.GetChild(1).gameObject;
-                if (built[0] != 0) { built[1] = 2; } else { built[0] = 2; }
+                
+                
+                if(built[0] != 0) {
+                    built[1] = 2;
+                    HeadChosen = Head[1].transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+                    HeadChosen.enabled = true;
+                } else
+                {
+                    built[0] = 2;
+                    BodyChosen = Body[1].transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+                    BodyChosen.enabled = true;
+                }
                 break;
             case "Eido\'":
-                //Head.transform.GetChild(2).gameObject;
-                if (built[0] != 0) {built[1] = 3;} else {built[0] = 3;}
+               
+                
+                if (built[0] != 0) { 
+                    built[1] = 3;
+                    HeadChosen = Head[2].transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+                    HeadChosen.enabled = true;
+                } else { 
+                    built[0] = 3;
+                    BodyChosen = Body[2].transform.gameObject.GetComponent<SkinnedMeshRenderer>();
+                    BodyChosen.enabled = true;
+                }
                 break;
         }
         readingGesture.isDrawing = false;
@@ -226,9 +310,10 @@ public class PresentationGestures : MonoBehaviour
     }
     void AssignRandomGolem()
     {
-        randomGolem[0] = Random.Range(1, 4);
-        randomGolem[1] = Random.Range(1, 4);
-        GameInfo.GetComponent<GUIText>().text = randomGolem[0]+""+ randomGolem[1];
+        randomGolem[0] = UnityEngine.Random.Range(1, 4);
+        randomGolem[1] = UnityEngine.Random.Range(1, 4);
+
+        GameInfo.GetComponent<GUIText>().text ="For Body: " + Symbol[randomGolem[0]-1] +"\nFor Head: "+ Symbol[randomGolem[1] - 1];
     }
 
 
