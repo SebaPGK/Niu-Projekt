@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PresentationGestures : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class PresentationGestures : MonoBehaviour
     private int[] randomGolem= new int[2];
 
     private int[] built = new int[2];
-    private int points = 0;
+    static int points = 0;
     private float timeRemaining = 120;
     // Use this for initialization
     void Start()
@@ -73,9 +74,21 @@ public class PresentationGestures : MonoBehaviour
         KinectManager manager = KinectManager.Instance;
 
         timeRemaining -= Time.deltaTime;
+        if (timeRemaining < 0)
+        {
+            PlayerPrefs.SetInt("points", points);
+            Destroy(gameObject);
+            SceneManager.LoadScene(2);
+
+        }
         var ts = TimeSpan.FromSeconds(timeRemaining);
         TimeRemainingText.GetComponent<GUIText>().text = "Time: " + string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
 
+        if (Input.GetKey("escape"))
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene(2);
+        }
 
         if (manager && manager.IsInitialized())
         {
@@ -180,6 +193,7 @@ public class PresentationGestures : MonoBehaviour
 
         if (isExecuted == true)
         {
+
             for (int j = 0; j < fields.GetLength(0); j++)
             {
                 if (scaleX > fields[j, 0] && scaleX < fields[j, 1] && scaleY > fields[j, 2] && scaleY < fields[j, 3])
