@@ -1,0 +1,337 @@
+fileFormatVersion: 2
+guid: 469255bd135f003409a00a0861979876
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: beams
+    100002: Counter
+    100004: Crystal1.001
+    100006: Crystal1.002
+    100008: Crystal1.003
+    100010: Crystal1.004
+    100012: Crystal1.005
+    100014: Crystal1.006
+    100016: Crystal2
+    100018: Crystal2.001
+    100020: Crystal2.002
+    100022: Crystal3
+    100024: Crystal3.001
+    100026: Crystal3.002
+    100028: Crystal3.003
+    100030: Crystal3.004
+    100032: Crystal3.005
+    100034: Crystal3.006
+    100036: Crystal3.007
+    100038: display
+    100040: doors
+    100042: fairylight
+    100044: Gear
+    100046: Gear.002
+    100048: Gear.003
+    100050: Gear.004
+    100052: Gear.005
+    100054: Light
+    100056: Room
+    100058: //RootNode
+    100060: shelf
+    100062: shelf_s
+    100064: WallCutoff
+    400000: beams
+    400002: Counter
+    400004: Crystal1.001
+    400006: Crystal1.002
+    400008: Crystal1.003
+    400010: Crystal1.004
+    400012: Crystal1.005
+    400014: Crystal1.006
+    400016: Crystal2
+    400018: Crystal2.001
+    400020: Crystal2.002
+    400022: Crystal3
+    400024: Crystal3.001
+    400026: Crystal3.002
+    400028: Crystal3.003
+    400030: Crystal3.004
+    400032: Crystal3.005
+    400034: Crystal3.006
+    400036: Crystal3.007
+    400038: display
+    400040: doors
+    400042: fairylight
+    400044: Gear
+    400046: Gear.002
+    400048: Gear.003
+    400050: Gear.004
+    400052: Gear.005
+    400054: Light
+    400056: Room
+    400058: //RootNode
+    400060: shelf
+    400062: shelf_s
+    400064: WallCutoff
+    2100000: MAT_Crystal3
+    2100002: MAT_Crystal1
+    2100004: MAT_Crystal2
+    2100006: MAT_GearB
+    2100008: MAT_GearS
+    2100010: MAT_Room
+    2100012: MAT_Shelf
+    2100014: MAT_doors
+    2100016: MAT_Display
+    2100018: MAT_beams
+    2100020: MAT_Counter
+    2100022: MAT_fairylight
+    2100024: MAT_Lights
+    2100026: WallCutoff
+    2100028: MAT_Default
+    2300000: beams
+    2300002: Counter
+    2300004: Crystal1.001
+    2300006: Crystal1.002
+    2300008: Crystal1.003
+    2300010: Crystal1.004
+    2300012: Crystal1.005
+    2300014: Crystal1.006
+    2300016: Crystal2
+    2300018: Crystal2.001
+    2300020: Crystal2.002
+    2300022: Crystal3
+    2300024: Crystal3.001
+    2300026: Crystal3.002
+    2300028: Crystal3.003
+    2300030: Crystal3.004
+    2300032: Crystal3.005
+    2300034: Crystal3.006
+    2300036: Crystal3.007
+    2300038: display
+    2300040: doors
+    2300042: fairylight
+    2300044: Gear
+    2300046: Gear.002
+    2300048: Gear.003
+    2300050: Gear.004
+    2300052: Gear.005
+    2300054: Room
+    2300056: shelf
+    2300058: shelf_s
+    2300060: WallCutoff
+    3300000: beams
+    3300002: Counter
+    3300004: Crystal1.001
+    3300006: Crystal1.002
+    3300008: Crystal1.003
+    3300010: Crystal1.004
+    3300012: Crystal1.005
+    3300014: Crystal1.006
+    3300016: Crystal2
+    3300018: Crystal2.001
+    3300020: Crystal2.002
+    3300022: Crystal3
+    3300024: Crystal3.001
+    3300026: Crystal3.002
+    3300028: Crystal3.003
+    3300030: Crystal3.004
+    3300032: Crystal3.005
+    3300034: Crystal3.006
+    3300036: Crystal3.007
+    3300038: display
+    3300040: doors
+    3300042: fairylight
+    3300044: Gear
+    3300046: Gear.002
+    3300048: Gear.003
+    3300050: Gear.004
+    3300052: Gear.005
+    3300054: Room
+    3300056: shelf
+    3300058: shelf_s
+    3300060: WallCutoff
+    4300000: Crystal1.001
+    4300002: Crystal1.002
+    4300004: Crystal1.003
+    4300006: Crystal2.001
+    4300008: Crystal2.002
+    4300010: Crystal3.001
+    4300012: Crystal3.002
+    4300014: Crystal3.003
+    4300016: Crystal3.004
+    4300018: Crystal1.004
+    4300020: Crystal3.005
+    4300022: Crystal3.006
+    4300024: Crystal1.005
+    4300026: Crystal1.006
+    4300028: Crystal3.007
+    4300030: Gear
+    4300032: Gear.002
+    4300034: Gear.003
+    4300036: Gear.004
+    4300038: Gear.005
+    4300040: Room
+    4300042: shelf
+    4300044: doors
+    4300046: display
+    4300048: beams
+    4300050: Counter
+    4300052: fairylight
+    4300054: WallCutoff
+    4300056: shelf_s
+    4300058: Crystal3
+    4300060: Crystal2
+    10800000: Light
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Counter
+    second: {fileID: 2100000, guid: 9056eac0872ecd1409584c4da40356aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Crystal1
+    second: {fileID: 2100000, guid: df74b25245c025b408ac00c8c412bf59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Crystal2
+    second: {fileID: 2100000, guid: 1728e2eba92380947b15a7fb2d1a5e29, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Crystal3
+    second: {fileID: 2100000, guid: c15a6e9634f578f4e91c4f371ee46f54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Default
+    second: {fileID: 2100000, guid: 5c278781d1b7ae04491f075b926f3d8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Display
+    second: {fileID: 2100000, guid: 34fb4cd1a7b27184dad0a112391d5070, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_GearB
+    second: {fileID: 2100000, guid: d5e6aae97f008854b8e499d5d7a34bde, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_GearS
+    second: {fileID: 2100000, guid: 03dd8af6e74303c42a487953a0a0d1c3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Lights
+    second: {fileID: 2100000, guid: d0220a7e81a9e2946954b31438e01c12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Room
+    second: {fileID: 2100000, guid: f8367a4dada2cc44bb5060676c447028, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Shelf
+    second: {fileID: 2100000, guid: dddf8b74b8418b649a03a33b9f6d20fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_beams
+    second: {fileID: 2100000, guid: ac90e007868df7d4e9fa4463d791d1a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_doors
+    second: {fileID: 2100000, guid: 5381e29d4d7edc24dabacc1d7eb9dcbb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_fairylight
+    second: {fileID: 2100000, guid: 4bfc383b830951e4d9ec729c46c15d37, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallCutoff
+    second: {fileID: 2100000, guid: 6fef343a8a1c2ea45b65d97014646a25, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
