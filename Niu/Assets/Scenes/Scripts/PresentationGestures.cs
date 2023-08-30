@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PresentationGestures : MonoBehaviour
 {
-    public GUIText GameInfo;
-    public GUIText GameInfo1;
-    public GUIText TimeRemainingText;
+    public Text GameInfo;
+    public Text GameInfo1;
+    public Text TimeRemainingText;
     private string[] Symbol = {"Ado", "U'de", "Eido'" };
     public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
     /*public KinectWrapper.NuiSkeletonPositionIndex TrackedJoint2 = KinectWrapper.NuiSkeletonPositionIndex.HandRight;
@@ -70,7 +71,7 @@ public class PresentationGestures : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameInfo1.GetComponent<GUIText>().text ="Punkty: " + points.ToString();
+        GameInfo1.text ="Points: " + points.ToString();
         KinectManager manager = KinectManager.Instance;
 
         timeRemaining -= Time.deltaTime;
@@ -82,7 +83,7 @@ public class PresentationGestures : MonoBehaviour
 
         }
         var ts = TimeSpan.FromSeconds(timeRemaining);
-        TimeRemainingText.GetComponent<GUIText>().text = "Time: " + string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
+        TimeRemainingText.text = "Time: " + string.Format("{0:00}:{1:00}", ts.Minutes, ts.Seconds);
 
         if (Input.GetKey("escape"))
         {
@@ -327,7 +328,7 @@ public class PresentationGestures : MonoBehaviour
         randomGolem[0] = UnityEngine.Random.Range(1, 4);
         randomGolem[1] = UnityEngine.Random.Range(1, 4);
 
-        GameInfo.GetComponent<GUIText>().text ="For Body: " + Symbol[randomGolem[0]-1] +"\nFor Head: "+ Symbol[randomGolem[1] - 1];
+        GameInfo.text ="For Body: " + Symbol[randomGolem[0]-1] +"\nFor Head: "+ Symbol[randomGolem[1] - 1];
     }
 
 

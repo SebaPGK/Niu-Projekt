@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameOverScript : MonoBehaviour {
     int points;
-    public GUIText GameInfo;
+    public Text GameInfo;
     // Use this for initialization
     public void OnRestartButton () {
 		SceneManager.LoadScene(0);
@@ -28,7 +29,7 @@ public class GameOverScript : MonoBehaviour {
 			Application.Quit();
         }
         
-            GameInfo.GetComponent<GUIText>().text = "Zdobyłeś: " + points;
+        GameInfo.text = "You got " + points + " points";
         
     }
 }
