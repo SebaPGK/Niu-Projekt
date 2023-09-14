@@ -38,13 +38,19 @@ public class PresentationGestures : MonoBehaviour
     private int[] randomGolem= new int[2];
 
     private int[] built = new int[2];
-    static int points = 0;
+    private int points = 0;
     private float timeRemaining = 120;
+
+    public AudioSource Select;
+    public AudioSource GolemPart;
+    public AudioSource Bad;
+    public AudioSource Good;
+
+
     // Use this for initialization
     void Start()
     {
         
-
         readingGesture = Camera.main.GetComponent<ReadingGesture>();
         if (OverlayObject)
         {
@@ -103,11 +109,11 @@ public class PresentationGestures : MonoBehaviour
                     Vector3 posJoint = manager.GetRawSkeletonJointPos(userId, iJointIndex);
                     if (posJoint != Vector3.zero)
                     {
-                        // 3d position to depth
+                        
                         Vector2 posDepth = manager.GetDepthMapPosForJointPos(posJoint);
 
 
-                        // depth pos to color pos
+                        
                         posColor = manager.GetColorMapPosForDepthPos(posDepth);
 
                         scaleX = (float)posColor.x / KinectWrapper.Constants.ColorImageWidth;
@@ -150,6 +156,7 @@ public class PresentationGestures : MonoBehaviour
                             if (randomGolem[0] == built[0] && randomGolem[1] == built[1])
                             {
                                 points += 5;
+                                Good.Play();
                                 
                             }
                             else if (built[0] == 0 && built[1] == 0)
@@ -159,6 +166,7 @@ public class PresentationGestures : MonoBehaviour
                             else
                             {
                                 points -= 3;
+                                Bad.Play();
                             }
                             randomGolem[0] = 0;
                             randomGolem[1] = 0;
@@ -194,7 +202,7 @@ public class PresentationGestures : MonoBehaviour
 
         if (isExecuted == true)
         {
-
+            Debug.Log("pn");
             for (int j = 0; j < fields.GetLength(0); j++)
             {
                 if (scaleX > fields[j, 0] && scaleX < fields[j, 1] && scaleY > fields[j, 2] && scaleY < fields[j, 3])
@@ -206,6 +214,7 @@ public class PresentationGestures : MonoBehaviour
                         coordinates[i] = j + 1;
                         i++;
                         Sprites[j].SetActive(true);
+                        Select.Play();
                     }
 
                 }
@@ -228,6 +237,8 @@ public class PresentationGestures : MonoBehaviour
                     canvas.SetActive(false);
                     isExecuted = false;
                     OverlayObject.GetComponent<MeshRenderer>().enabled = false;
+
+                    GolemPart.Play();
                     break;
                 case "0351200000":
                     Debug.Log("U\'de");
@@ -235,6 +246,8 @@ public class PresentationGestures : MonoBehaviour
                     canvas.SetActive(false);
                     isExecuted = false;
                     OverlayObject.GetComponent<MeshRenderer>().enabled = false;
+
+                    GolemPart.Play();
                     break;
                 case "0321478900":
                     Debug.Log("Eido\'");
@@ -242,6 +255,8 @@ public class PresentationGestures : MonoBehaviour
                     canvas.SetActive(false);
                     isExecuted = false;
                     OverlayObject.GetComponent<MeshRenderer>().enabled = false;
+
+                    GolemPart.Play();
                     break;
                 default:
                     

@@ -7,9 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameOverScript : MonoBehaviour {
     int points;
     public Text GameInfo;
+    public AudioSource ButtonClick;
     // Use this for initialization
     public void OnRestartButton () {
-		SceneManager.LoadScene(0);
+        ButtonClick.Play();
+        SceneManager.LoadScene(0);
 	}
 
     public void OnQuitButton()
@@ -19,7 +21,8 @@ public class GameOverScript : MonoBehaviour {
 
     void Start()
     {
-       points = PlayerPrefs.GetInt("points");
+        DontDestroyOnLoad(gameObject);
+        points = PlayerPrefs.GetInt("points");
     }
 
     // Update is called once per frame
@@ -30,6 +33,20 @@ public class GameOverScript : MonoBehaviour {
         }
         
         GameInfo.text = "You got " + points + " points";
-        
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "Menu")
+        {
+            Canvas canvas = gameObject.GetComponent<Canvas>();
+            canvas.enabled = false;
+
+            if (ButtonClick.isPlaying == false)
+            {
+                Destroy(gameObject);
+            }
+        }
+
     }
 }
