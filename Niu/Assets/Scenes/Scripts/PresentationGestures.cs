@@ -38,7 +38,7 @@ public class PresentationGestures : MonoBehaviour
     private int[] randomGolem= new int[2];
 
     private int[] built = new int[2];
-    static int points = 0;
+    private int points = 0;
     private float timeRemaining = 120;
 
     public AudioSource Select;
@@ -109,11 +109,11 @@ public class PresentationGestures : MonoBehaviour
                     Vector3 posJoint = manager.GetRawSkeletonJointPos(userId, iJointIndex);
                     if (posJoint != Vector3.zero)
                     {
-                        // 3d position to depth
+                        
                         Vector2 posDepth = manager.GetDepthMapPosForJointPos(posJoint);
 
 
-                        // depth pos to color pos
+                        
                         posColor = manager.GetColorMapPosForDepthPos(posDepth);
 
                         scaleX = (float)posColor.x / KinectWrapper.Constants.ColorImageWidth;
@@ -202,7 +202,7 @@ public class PresentationGestures : MonoBehaviour
 
         if (isExecuted == true)
         {
-
+            Debug.Log("pn");
             for (int j = 0; j < fields.GetLength(0); j++)
             {
                 if (scaleX > fields[j, 0] && scaleX < fields[j, 1] && scaleY > fields[j, 2] && scaleY < fields[j, 3])
